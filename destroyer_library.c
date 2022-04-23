@@ -87,7 +87,6 @@ void left(int speed, int ticks)
 void move_servo_slowly(int port, int end_pos, int speed)
 {
     
-    printf("IM MOVING MY SERVOS AND STUFF!!!");
     int current_pos;
     current_pos=get_servo_position(port);
     printf("%d     %d", current_pos, end_pos);
@@ -154,6 +153,30 @@ void line_follow(int speed)
 
         if (analog(LINE) > BLACK_THRESH)
         {
+			mav(LM,speed-300);
+        	mav(RM,speed+300);
+        }
+        else
+        {
+			mav(LM,speed+300);
+			mav(RM,speed-300);
+        }
+    } //END WHILE
+    
+    mav(LM, 0);
+    mav(RM,0);
+
+}
+
+void line_follow_ticks(int speed,int ticks)
+{
+    cmpc(LM);
+    cmpc(RM);
+    while (gmpc(LM)<ticks)
+    {
+
+        if (analog(LINE) > BLACK_THRESH)
+        {
 			mav(LM,speed-200);
         	mav(RM,speed+300);
         }
@@ -168,7 +191,6 @@ void line_follow(int speed)
     mav(RM,0);
 
 }
-
 
 int avg_analog(int port, int num_readings)
 {

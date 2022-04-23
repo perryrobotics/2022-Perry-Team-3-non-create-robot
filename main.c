@@ -5,187 +5,181 @@
 
 
 int main()
-{
-    int punch_cubes = 1;
-    
+{  
     printf("THE DESTROYER\n");
     printf("Hello, World!\n");
-	printf("i am the DESTROYER 11. \n");
-	printf("(v11.6/a) Thursday, March 31 \n");
-    printf("Press:\nA,A - PUNCH CUBES\nC,A - DONT PUNCH CUBES!!!\n");
-        
-	while (a_button() == 0 && c_button() == 0)
-    {
-    }
-    
-    if (c_button() ==1)
-    {
-        punch_cubes = 0;
-    }
-    
-    if(punch_cubes == 1)
-    {
-        printf("IM PUNCHING CUBES!!!\n");
-    }
-    else
-    {
-        printf("NOT PUNCHING CUBES!!!\n");
-    }
-    msleep(3000);
-    
-    
+    printf("i am the DESTROYER 12 (final version). \n");
+    printf("Saturday, April 23 \n");
+
+//==================================================================
+//						START AND SETUP PORTION//
+//==================================================================
+                    
     // GET INTO START POSITION
     enable_servos();
     set_servo_position(CLAW, CLAW_CLOSED+60);
-	set_servo_position(ARM, ARM_BACK);
-
+    set_servo_position(ARM, ARM_BACK);
+    
+	printf("Press (A) to start");
     while (!a_button())
     {}
-    
+
     printf(" 'WORLD DOMINATION IS IN THE NEAR FUTURE!' - botguy \n");
     msleep(1500);
-	shut_down_in(120);
-	left(300,150);
-	set_servo_position(ARM, ARM_DOWN);
-    //set_servo_position(CLAW, CLAW_OPEN);
-    msleep(750);
- 
-    right(250,750); //PUSH THE POMS AWAY
-    left(350,450); //COME BACK TO START
-    set_servo_position(ARM, ARM_PIPE);
-    //right(900,200);
     
-    if (punch_cubes == 0)
-    {
-        set_servo_position(ARM, ARM_BACK);
-    }
-    
-    forward(1500,4500); // GO PUSH FIRST CUBE
-    backward(900,1500);
-    right(900,200);
-    forward(900,1250); // The second cube now falls off the pipe
-	backward(900,900);
-    right(900,140);// um, sure?! just the usual...
-    forward(1500,2000);// going for the THIRD CUBE!
-    backward(900,2000);
-    right(900,550);
-    set_servo_position(ARM, ARM_BACK);
-    backward(300,1400);//align on pipe
-    forward(1000,750);
-    right(1000,1150);
-    backward(1000,1200);
+   // wait_for_light(START_SENSOR);
+    shut_down_in(120);
+//==================================================================
+//						BEGIN GAME HERE
+//                 3-2-1-GOOOOOOOOOOOOOOOOOO!!!
+//==================================================================  
+    set_servo_position(CLAW, CLAW_OPEN);
+	msleep(DELAY);
     set_servo_position(ARM, ARM_DOWN);
     msleep(DELAY);
-    left(300,750); //sweep poms into position
-    set_servo_position(ARM, ARM_CARRY);
-    msleep(DELAY); // the ultimate destroyer strength here 
-    left(300,100);// destroying the poms
+
+   	forward(900,2000); //PUSH THE POMS AWAY
+    //set_servo_position(CLAW, CLAW_CLOSED);
+    move_servo_slowly(CLAW, CLAW_CLOSED, 30);
+    msleep(DELAY);
+    backward(900,2000);//back up
     set_servo_position(CLAW, CLAW_OPEN);
     msleep(DELAY);
-	set_servo_position(ARM, ARM_DOWN);
-    msleep(DELAY);
-//    right(400,130);
+    right(900,350);
     drive_to_black(LINE, 900);
-	//msleep(3000);
-    line_follow(1000);
-
+    //set_servo_position(CLAW, CLAW_CLOSED);
+    move_servo_slowly(CLAW, CLAW_CLOSED, 30);
+    msleep(DELAY);
+    set_servo_position(ARM, ARM_BACK);
+    forward(900,2400);
+    right(900,700);
+    backward(800, 2700); // HIT PIPE BEFORE GOING DOWN THE LINE
+	move_servo_slowly(ARM, ARM_DOWN, 40);
+    //set_servo_position(ARM, ARM_DOWN);
+    msleep(DELAY);
+    set_servo_position(CLAW, CLAW_OPEN);
+    msleep(DELAY);
+	forward(900, 500);
+    right(900,170);
+    drive_to_black(LINE, 1000);
+    
+	//msleep(5000);
+    line_follow(1000);  // LINE FOLLOW TO CENTER BLACK TAPE
+	//msleep(5000);
     set_servo_position(CLAW, CLAW_ALMOSTOPEN);
     msleep(DELAY);
-    //left(400,100);
     set_servo_position(CLAW, CLAW_OPEN);
     msleep(DELAY);
-// DROP THE POMS IN TRANSPORTER======================================
-    forward(1100,4950); // FORWARD TO TRANSPORTER!!!
-    right(400,100);//SLIGHT TURN
-    //set_servo_position(CLAW, CLAW_CLOSED); // GRAB POMS!!!
-	move_servo_slowly(CLAW, CLAW_CLOSED, 20);
+    forward(900,500); // get past the black tape 
+    
+//==================================================================
+//						DROP POMS
+//==================================================================   
+    line_follow_ticks(900, 4650);  // LINE FOLOW INTO TRANSPORTER
+    move_servo_slowly(CLAW, CLAW_CLOSED, 10); // close around poms
     msleep(DELAY);
-	backward(400,500);
+    backward(400,500);
     set_servo_position(ARM, ARM_PIPE);
     msleep(DELAY);
     forward(1000,2400); // OVER TRABSPORTER FOT FIRST DUMP
-    set_servo_position(CLAW, CLAW_OPEN); // SCORE POMS!!!!
-    msleep(DELAY);
-    backward(900,1850); //go back to get out from tranbsporter
-    set_servo_position(ARM, ARM_DOWN);
-    msleep(DELAY);
-	//forward(300,50); //go forward a bit 
-	set_servo_position(CLAW, CLAW_CLOSED); //Grab Extra Poms
-    msleep(DELAY);
-	set_servo_position(ARM, ARM_PIPE);
-    msleep(DELAY);
-    forward(1000,2000); //over transporter for second dump
-    set_servo_position(CLAW, CLAW_OPEN); //Dump Dum Poms #2
-    //====================================================================================
-    //                                   now get cubes
-  
-    backward(500,250);
     msleep(500);
-    left(500,1275);
-    set_servo_position(ARM, ARM_PIPE);
-    forward(900,1375);
+	move_servo_slowly(CLAW, CLAW_HALF_OPEN,35);
+    msleep(DELAY);
+    
+    // GO FOR SECOND GRAB!!!
+    //backward(900,1900); //go back to get out from tranbsporter
+    //set_servo_position(ARM, ARM_DOWN);
+    //msleep(DELAY);
+    //set_servo_position(CLAW, CLAW_CLOSED); //Grab Extra Poms
+    //msleep(DELAY);
+    //set_servo_position(ARM, ARM_PIPE);
+    //msleep(DELAY);
+    //forward(1000,1900); //over transporter for second dump
+	move_servo_slowly(CLAW, CLAW_HALF_OPEN,35); // open for second dump
+    //====================================================================================
+    //                                   now get cubes - FIRST RED CUBE
+    //====================================================================================
+    backward(500,250);
+    left(500,1125); //turn to first red cube
+    set_servo_position(ARM, ARM_PIPE+25);
+    forward(900,1000);  // GO TOWARD FIRST RED cube
     set_servo_position(CLAW, CLAW_CLOSED);
     msleep(DELAY);
     back_to_black(LINE,900);
     set_servo_position(ARM, ARM_SUSAN);
-    right(900,1900);
-    forward(900,2150);
-	move_servo_slowly(CLAW, CLAW_OPEN, 20);   
+    right(900,1750);
+    forward(900,3070);  // go towards lazy susan with 1st red cube
+    move_servo_slowly(CLAW, CLAW_OPEN, 50);   
+	left(100,50);
     
-    /* RED CUBE DELIVERED! */
+    // RED CUBE DELIVERED! //
     move_servo_slowly(ARM, 0, 10);
     set_servo_position(CLAW, CLAW_CLOSED);
-    //===== now to lazy susan =====
+//===========================================================
+//                 RED CUBE DELIVERED - GET FIRST GREEN CUBE!!
+//===========================================================
+    
     back_to_black(LINE, 800);
-    move_servo_slowly(ARM, ARM_CARRY, 20);
-    msleep(500);
-    right(500,50);
-    forward(900, 3500);
-	left(500, 300);
-    right(800,2900);
-    backward(1000,1600);
-    drive_to_black(LINE, 900);
-    set_servo_position(ARM, ARM_PIPE);
-    set_servo_position(CLAW, CLAW_HALF_OPEN);
-    forward(900,1700);
-    set_servo_position(CLAW, CLAW_CLOSED);
-    back_to_black(LINE, 1000);
-    //===== WE HAVE THE GREEN CUBE====
-    //===== DELIVER THE PACKAGE=======
-    set_servo_position(ARM, ARM_SUSAN);
-    backward(1000,2500);
-    right(800,1000);
-    forward(900,1900);
-    left(1000,1000);
-    forward(1100,3500);
-    back_to_black(LINE,900);
-    right(800,2200);
-    forward(800,200);
+    right(800,2675);  // TURN TO FIRST GREEN CUBE
     set_servo_position(CLAW, CLAW_OPEN);
     msleep(DELAY);
-	//======THE ENDGAME HAS BEGUN====
-    //======GET LAST CUBE============
-    backward(900,400);
-    right(900,1100);
-    backward(900,400);
-    forward(900,4500);
-    //TURN TO LAST CUBE
-    right(1000,1000);
-	set_servo_position(ARM, ARM_PIPE);
-    forward(1000, 1450);
+    set_servo_position(ARM, ARM_PIPE+20);
+    msleep(DELAY);
+    forward(800,1250);
     set_servo_position(CLAW, CLAW_CLOSED);
-   	msleep(500);
-	back_to_black(LINE,900);
-    set_servo_position(ARM, ARM_SUSAN);
-    right(1000, 1200);
-    forward(1000, 3000);
-    right(1000, 650);
-    forward(1000, 1500); 
-    set_servo_position(CLAW, CLAW_HALF_OPEN);
-    msleep(1000);
-    printf("SUCCESS \n");
-  
+    msleep(750);
+    back_to_black(LINE, 900);
+	move_servo_slowly(ARM, ARM_CARRY, 20);
+    right(800, 1400); // turn to be over right side of trasporter
+    forward(900, 500);
+	move_servo_slowly(ARM, ARM_PIPE, 20);
+	move_servo_slowly(CLAW, CLAW_OPEN, 50);
+	move_servo_slowly(ARM, ARM_CARRY, 40);
+    backward(900, 500);    
     
+
+//=====================================================
+//       Delivered FIRST GREEN - GET GREEN SECOND CUBE 
+//=====================================================
+    
+    msleep(750);
+    left(800, 900);//turn to second green cube
+	move_servo_slowly(ARM, ARM_PIPE+25, 20);
+    forward(800, 1900);
+    set_servo_position(CLAW, CLAW_CLOSED);
+	msleep(1000);
+	
+	backward(800,1600);
+	move_servo_slowly(ARM, ARM_CARRY, 20);
+    right(800, 1000);//turn to transporter
+	forward(900, 1000);
+	move_servo_slowly(ARM, ARM_PIPE, 20);
+   	move_servo_slowly(CLAW, CLAW_OPEN, 50);
+    msleep(750);
+	move_servo_slowly(ARM, ARM_CARRY, 40);
+	backward(900, 1000);
+    
+//=====================================================
+//	Delivered Second GREEN Cube GET SECOND RED!!
+//=====================================================
+    left(900,850); // TURN TO SECOND RED CUBE
+	move_servo_slowly(ARM, ARM_PIPE+25, 20);
+    forward(900, 2500);
+    set_servo_position(CLAW, CLAW_CLOSED);
+    msleep(500);
+    back_to_black(LINE, 900);
+    set_servo_position(ARM, ARM_SUSAN);
+    msleep(300);
+    right(900,1200);  // TURN TO LAZY SUSAN
+    forward(900,3700);
+	move_servo_slowly(CLAW, CLAW_HALF_OPEN, 25);
+//=====================================================
+//	EVERYTHING DONE!! GET OUT OF THE WAY!!!
+//=====================================================    
+    
+	back_to_black(LINE, 900); // GET OUT OF THE WAY!!!!
+    backward(900,2000);
+
     return 0;
 
 }
